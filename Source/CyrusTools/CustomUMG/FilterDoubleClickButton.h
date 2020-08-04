@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CustomUMG/EasyStyleButton.h"
+#include "EasyStyleButton.h"
 #include "Tickable.h"
 #include "FilterDoubleClickButton.generated.h"
 

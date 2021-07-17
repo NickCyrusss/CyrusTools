@@ -3,32 +3,36 @@
 
 #include "CyrusFuncLib.h"
 
-#include "DesktopPlatformModule.h"
+//#include "DesktopPlatformModule.h"
 #include "Blueprint/UserWidget.h"
+#include "Misc/Paths.h"
+#include "Windows/WindowsPlatformProcess.h"
+#include "Widgets/SWindow.h"
+#include "Framework/Application/SlateApplication.h"
 
-FString UCyrusFuncLib::SelectFileOnDisk()
-{
-    IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
-    if (DesktopPlatform)
-    {
-        TArray<FString> OpenFilenames;
-        DesktopPlatform->OpenFileDialog(
-            nullptr,
-            TEXT("OpenFile"),
-            FString(TEXT("")),
-            TEXT(""),
-            TEXT("All Files (*.*)"),
-            EFileDialogFlags::None,
-            OpenFilenames
-        );
-
-        if (OpenFilenames.Num() > 0)
-        {
-            return FPaths::ConvertRelativePathToFull(OpenFilenames[0]);
-        }
-    }
-    return TEXT("");
-}
+//FString UCyrusFuncLib::SelectFileOnDisk()
+//{
+//    IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
+//    if (DesktopPlatform)
+//    {
+//        TArray<FString> OpenFilenames;
+//        DesktopPlatform->OpenFileDialog(
+//            nullptr,
+//            TEXT("OpenFile"),
+//            FString(TEXT("")),
+//            TEXT(""),
+//            TEXT("All Files (*.*)"),
+//            EFileDialogFlags::None,
+//            OpenFilenames
+//        );
+//
+//        if (OpenFilenames.Num() > 0)
+//        {
+//            return FPaths::ConvertRelativePathToFull(OpenFilenames[0]);
+//        }
+//    }
+//    return TEXT("");
+//}
 
 void UCyrusFuncLib::CreateWindow(FText inWindowTitle, UUserWidget* inWidget, FVector2D inSize)
 {
@@ -59,6 +63,23 @@ void UCyrusFuncLib::CreateWindow(FText inWindowTitle, UUserWidget* inWidget, FVe
 		//Default in case no top window
 		FSlateApplication::Get().AddWindow(Window);
 	}
+	CreationWindow = Window;
 
+}
 
+TSharedPtr<SWindow> UCyrusFuncLib::CreationWindow = nullptr;
+void UCyrusFuncLib::DestroyWindow()
+{
+	if (CreationWindow)
+		CreationWindow->RequestDestroyWindow();
+}
+
+void UCyrusFuncLib::CreateProcess(FString fileName)
+{
+	if (!FPaths::FileExists(fileName))
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s is not exist!"), *fileName);
+		return;
+	}
+	FPlatformProcess::LaunchFileInDefaultExternalApplication(*fileName);
 }

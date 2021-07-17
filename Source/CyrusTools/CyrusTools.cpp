@@ -1,8 +1,8 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "CyrusTools.h"
-#include "ISettingsModule.h"
-#include "ISettingsSection.h"
+#include "Developer/Settings/Public/ISettingsModule.h"
+#include "Developer/Settings/Public/ISettingsSection.h"
 #include "CyrusToolsSetting.h"
 #include "Interfaces/IPluginManager.h"
 

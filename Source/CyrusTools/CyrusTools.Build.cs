@@ -48,7 +48,7 @@ public class CyrusTools : ModuleRules
 				"SlateCore",
                 "UMG",
                 "Projects",
-                "DesktopPlatform",
+                //"DesktopPlatform",
                 // ... add private dependencies that you statically link with here ...	
 			}
 			);
